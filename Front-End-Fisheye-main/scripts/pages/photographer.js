@@ -19,8 +19,10 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
             <h1>${photographer.name}</h1>
             <p>${photographer.city}, ${photographer.country}</p>
             <p>${photographer.tagline}</p>
-            <p>$${photographer.price}</p>
+            <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+            
             <img src="${photographer.portrait}" alt="${photographer.name}">
+            
         `;
 
         const mainDiv = document.querySelector('#main');
@@ -29,12 +31,24 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
         media.forEach(m => {
             const mediaItem = document.createElement('div');
             mediaItem.classList.add('media-item');
-            mediaItem.innerHTML = `
-                <img src="./assets/Sample_Photos/${photographer.name}/${m.image}" alt="${m.title}">
+
+            if (m.image) {
+                mediaItem.innerHTML = `
+                    <img src="./assets/Sample_Photos/${photographer.name}/${m.image}" alt="${m.title}">
+                `;
+            } else if (m.video) { // ON vérifie si c'est une image ou une vidéo
+                mediaItem.innerHTML = `
+                    <video class="media-video" controls>
+                        <source src="./assets/Sample_Photos/${photographer.name}/${m.video}" type="video/mp4"> 
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            }
+
+            mediaItem.innerHTML += `
                 <h3>${m.title}</h3>
                 <p>Likes: ${m.likes}</p>
-                <p>Date: ${m.date}</p>
-                <p>Price: $${m.price}</p>
+                
             `;
             mediaSection.appendChild(mediaItem);
         });
@@ -42,10 +56,16 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
     }
 }
 
-function displayModal() {
-    document.getElementById('contact_modal').style.display = 'block';
+function filterMedia() {
+    const filterValue = document.getElementById('filter').value;
+    const mediaItems = document.querySelectorAll('.media-item');
+
+    mediaItems.forEach(item => {
+        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
 }
 
-function closeModal() {
-    document.getElementById('contact_modal').style.display = 'none';
-}
