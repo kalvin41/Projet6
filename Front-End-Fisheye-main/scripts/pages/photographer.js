@@ -16,13 +16,16 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
     if (photographer) {
         const headerDiv = document.querySelector('.photograph-header');
         headerDiv.innerHTML = `
+         <div>
             <h1>${photographer.name}</h1>
             <p>${photographer.city}, ${photographer.country}</p>
             <p>${photographer.tagline}</p>
+             </div>
+             <div class="move">
             <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
             
             <img src="${photographer.portrait}" alt="${photographer.name}">
-            
+            </div>
         `;
 
         const mainDiv = document.querySelector('#main');

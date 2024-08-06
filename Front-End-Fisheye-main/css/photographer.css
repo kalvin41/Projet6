@@ -85,7 +85,12 @@ form input {
     border: none;
     border-radius: 5px;
 }
-
+.photograph-header {
+    display: flex;
+}
+.move{
+    
+}
 .photograph-header img {
 height: 200px;
     width: 200px;
