@@ -37,14 +37,24 @@ h1 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
 }
 
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
 }
+.zoom-container {
+    width: 400px; /* Taille du conteneur */
+    height: 400px; /* Taille du conteneur */
+    border-radius: 250px; /* Bord arrondi pour le conteneur */
+    overflow: hidden; /* Masquer les parties de l'image qui débordent */
+    scale: 0.7;
+}
 
-.photographer_section article img {
-    height: 200px;
-    width: 200px;
+.zoom-container img {
+    height: 450px; /* Agrandit l'image */
+    width: 500px;  /* Agrandit l'image */
+    object-fit: cover; /* Assure que l'image couvre le conteneur */
+    object-position: 80% 50%; /* Positionne l'image pour zoomer sur une partie spécifique */
 }

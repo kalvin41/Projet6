@@ -45,7 +45,9 @@ function photographerTemplate(photographer) { // data-id pour récupérer l'id d
             const div = document.createElement('article');
             div.classList.add('photographer-card');
             div.innerHTML = `
+            <div class="zoom-container">
                 <a href="photographer.html?id=${photographer.id}"><img src="${photographer.portrait}" alt="${photographer.name}"></a>
+                </div>
                 <h2>${photographer.name}</h2>
                 <p>${photographer.city}, ${photographer.country}</p>
                 <p>${photographer.tagline}</p>
