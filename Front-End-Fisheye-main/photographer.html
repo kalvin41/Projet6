@@ -5,6 +5,7 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
+    <script src="https://kit.fontawesome.com/4d0ccbc7aa.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
     <title>Fisheye - photographe </title>
   </head>
@@ -13,18 +14,22 @@
       <img src="assets/images/logo.png" class="logo" />
     </header>
     <main id="main">
-      <div class="photograph-header">
-       
+      <div class="photograph-header"></div>
+      
+      <div class="custom-select-container">
+        <h4>Trier par :</h4>
+        <button id="custom-select" aria-haspopup="listbox" aria-expanded="false">
+          Popularité
+          <i class="fa-solid fa-angle-down arrow"></i> 
+          
+        </button>
+        <ul id="custom-options" role="listbox" aria-labelledby="custom-select" hidden>
+          <li role="option" tabindex="0" data-value="popularite">Popularité</li>
+          <li role="option" tabindex="0" data-value="date">Date</li>
+          <li role="option" tabindex="0" data-value="titre">Titre</li>
+        </ul>
       </div>
-      <div class="filter-container">
-        <label for="filter">Trier par :</label>
-        <select id="filter" onchange="filterMedia()">
-            <option value="popularite">Popularité</option>
-            <option value="nature">Date</option>
-            <option value="architecture">Titre</option>
-            
-        </select>
-    </div>
+      
     </main>
     <div id="contact_modal" class="modal-container">
 			<div class="modal">
@@ -47,7 +52,7 @@
         </div>
         <div>
             <label for="message">Votre message</label>
-            <textarea id="message" name="message" rows="5" cols="50" required></textarea>
+            <textarea id="message" name="message" rows="10" cols="75" required></textarea>
         </div>
           <button class="contact_button" type="submit">Envoyer</button>
 				</form>

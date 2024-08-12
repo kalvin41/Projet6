@@ -16,15 +16,16 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
     if (photographer) {
         const headerDiv = document.querySelector('.photograph-header');
         headerDiv.innerHTML = `
-         <div>
+         <div >
             <h1>${photographer.name}</h1>
-            <p>${photographer.city}, ${photographer.country}</p>
+            <p class="villes">${photographer.city}, ${photographer.country}</p>
             <p>${photographer.tagline}</p>
              </div>
              <div class="move">
             <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-            
+            <div class="move3">
             <img src="${photographer.portrait}" alt="${photographer.name}">
+            </div>
             </div>
         `;
 
@@ -49,9 +50,10 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
             }
 
             mediaItem.innerHTML += `
+            <div class="move2">
                 <h3>${m.title}</h3>
-                <p>Likes: ${m.likes}</p>
-                
+                <p>${m.likes} <i class="fa-solid fa-heart"></i></p>
+            </div>    
             `;
             mediaSection.appendChild(mediaItem);
         });
