@@ -17,18 +17,19 @@
       <div class="photograph-header"></div>
       
       <div class="custom-select-container">
-        <h4>Trier par :</h4>
+        <h4>Trier par</h4>
         <button id="custom-select" aria-haspopup="listbox" aria-expanded="false">
-          Popularité
-          <i class="fa-solid fa-angle-down arrow"></i> 
-          
+            <span id="selected-option" data-value="popularite">Popularité</span>
+            <i class="fa-solid fa-angle-down arrow"></i> 
         </button>
         <ul id="custom-options" role="listbox" aria-labelledby="custom-select" hidden>
-          <li role="option" tabindex="0" data-value="popularite">Popularité</li>
-          <li role="option" tabindex="0" data-value="date">Date</li>
-          <li role="option" tabindex="0" data-value="titre">Titre</li>
+            <li role="option" tabindex="0" data-value="date">Date</li>
+            <li role="option" tabindex="0" data-value="titre">Titre</li>
+            <li role="option" tabindex="0" data-value="popularite">Popularité</li>
         </ul>
-      </div>
+    </div>
+    
+    
       
     </main>
     <div id="contact_modal" class="modal-container">
