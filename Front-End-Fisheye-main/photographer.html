@@ -16,18 +16,21 @@
     <main id="main">
       <div class="photograph-header"></div>
       
-      <div class="custom-select-container">
-        <h4>Trier par</h4>
-        <button id="custom-select" aria-haspopup="listbox" aria-expanded="false">
-            <span id="selected-option" data-value="popularite">Popularité</span>
-            <i class="fa-solid fa-angle-down arrow"></i> 
-        </button>
-        <ul id="custom-options" role="listbox" aria-labelledby="custom-select" hidden>
-            <li role="option" tabindex="0" data-value="date">Date</li>
-            <li role="option" tabindex="0" data-value="titre">Titre</li>
-            <li role="option" tabindex="0" data-value="popularite">Popularité</li>
-        </ul>
-    </div>
+      <div class="sort-container">
+        <div class="sort-container">
+          <h4>Trier par</h4>
+          <div class="custom-select">
+              <button id="filter-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="custom-options">
+                  Popularité <i class="fa-solid fa-angle-down arrow"></i>
+              </button>
+              <ul id="custom-options" role="listbox" aria-labelledby="filter-trigger" hidden>
+                  <li role="option" data-value="popularite">Popularité</li>
+                  <li role="option" data-value="date">Date</li>
+                  <li role="option" data-value="titre">Titre</li>
+              </ul>
+          </div>
+      </div>
+      
     
     
       

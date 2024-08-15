@@ -1,16 +1,22 @@
 // Variable globale pour stocker les médias du photographe
 let photographerMedia = [];
-//Mettre le code JavaScript lié à la page photographer.html
+
+// Charger les détails du photographe et ses médias lorsque la page est prête
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const photographerId = urlParams.get('id');
+
     if (photographerId) {
         fetch('./data/photographers.json')
             .then(response => response.json())
             .then(data => displayPhotographerDetailsAndMedia(photographerId, data));
     }
+
+    // Ajouter les événements pour le tri
+    initializeSortEvents();
 });
 
+// Fonction pour afficher les détails du photographe et ses médias
 function displayPhotographerDetailsAndMedia(photographerId, data) {
     const photographer = data.photographers.find(p => p.id == photographerId);
     photographerMedia = data.media.filter(m => m.photographerId == photographerId); // Stocker les médias dans la variable globale
@@ -18,24 +24,25 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
     if (photographer) {
         const headerDiv = document.querySelector('.photograph-header');
         headerDiv.innerHTML = `
-         <div>
-            <h1>${photographer.name}</h1>
-            <p class="villes">${photographer.city}, ${photographer.country}</p>
-            <p>${photographer.tagline}</p>
-         </div>
-         <div class="move">
-            <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-            <div class="move3">
-                <img src="${photographer.portrait}" alt="${photographer.name}">
+            <div>
+                <h1>${photographer.name}</h1>
+                <p class="villes">${photographer.city}, ${photographer.country}</p>
+                <p>${photographer.tagline}</p>
             </div>
-         </div>
+            <div class="move">
+                <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+                <div class="move3">
+                    <img src="${photographer.portrait}" alt="${photographer.name}">
+                </div>
+            </div>
         `;
 
         // Afficher les médias
         displayPhotos(photographerMedia);
     }
 }
-// Fonction de tri
+
+// Fonction de tri des photos
 function sortPhotos(criteria) {
     let sortedPhotos;
 
@@ -51,25 +58,27 @@ function sortPhotos(criteria) {
             break;
     }
 
-    // Appeler une fonction pour afficher les photos triées
+    // Afficher les photos triées
     displayPhotos(sortedPhotos);
 }
 
 // Fonction d'affichage des médias
 function displayPhotos(sortedPhotos) {
     const mainDiv = document.querySelector('#main');
-    const mediaSection = document.querySelector('.photographer-media');
+    let mediaSection = document.querySelector('.photographer-media');
 
     // Si la section média existe déjà, on la vide pour la mettre à jour
-    if (mediaSection) {
-        mediaSection.innerHTML = '';
-    } else {
-        // Sinon, on la crée
-        const newMediaSection = document.createElement('section');
-        newMediaSection.classList.add('photographer-media');
-        mainDiv.appendChild(newMediaSection);
+    if (!mediaSection) {
+        // Si la section n'existe pas, la créer
+        mediaSection = document.createElement('section');
+        mediaSection.classList.add('photographer-media');
+        mainDiv.appendChild(mediaSection);
     }
 
+    // Vider le contenu précédent
+    mediaSection.innerHTML = '';
+
+    // Ajouter les nouveaux médias triés
     sortedPhotos.forEach(m => {
         const mediaItem = document.createElement('div');
         mediaItem.classList.add('media-item');
@@ -88,37 +97,53 @@ function displayPhotos(sortedPhotos) {
         }
 
         mediaItem.innerHTML += `
-        <div class="move2">
-            <h3>${m.title}</h3>
-            <p>${m.likes} <i class="fa-solid fa-heart"></i></p>
-        </div>
+            <div class="move2">
+                <h3>${m.title}</h3>
+                <p>${m.likes} <i class="fa-solid fa-heart"></i></p>
+            </div>
         `;
 
-        document.querySelector('.photographer-media').appendChild(mediaItem);
+        mediaSection.appendChild(mediaItem);
     });
 }
 
-// Gestion de la sélection du menu déroulant
-document.getElementById('custom-select').addEventListener('click', function() {
-    const optionsList = document.getElementById('custom-options');
-    const expanded = optionsList.getAttribute('hidden') === null;
+function initializeSortEvents() {
+    const filterTrigger = document.getElementById('filter-trigger');
+    const customOptions = document.getElementById('custom-options');
 
-    optionsList.toggleAttribute('hidden', expanded);
-    this.setAttribute('aria-expanded', !expanded);
-});
+    // Afficher ou cacher les options de tri lorsque l'utilisateur clique sur le trigger
+    filterTrigger.addEventListener('click', function(event) {
+        event.preventDefault();
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
 
-// Sélection et tri
-document.querySelectorAll('#custom-options li').forEach(option => {
-    option.addEventListener('click', function() {
-        const sortBy = this.getAttribute('data-value');
-        sortPhotos(sortBy);
-
-        // Mettre à jour le bouton avec le texte sélectionné
-        const button = document.getElementById('custom-select');
-        button.innerHTML = `${this.innerText} <i class="fa-solid fa-angle-down arrow"></i>`;
-
-        // Cacher les options après sélection
-        document.getElementById('custom-options').setAttribute('hidden', true);
-        button.setAttribute('aria-expanded', false);
+        // Basculer la visibilité du menu déroulant
+        customOptions.hidden = isExpanded;
+        this.setAttribute('aria-expanded', !isExpanded); // Mettre à jour l'attribut aria-expanded
     });
-});
+
+    // Gérer la sélection du tri
+    document.querySelectorAll('#custom-options li').forEach(option => {
+        option.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedValue = this.getAttribute('data-value');
+            const filterTrigger = document.getElementById('filter-trigger');
+
+            // Mettre à jour uniquement le texte du bouton pour afficher le critère sélectionné
+            const triggerText = this.textContent.trim();
+            filterTrigger.childNodes[0].textContent = triggerText + ' ';
+            filterTrigger.setAttribute('aria-expanded', 'false'); // Réinitialiser aria-expanded
+            customOptions.hidden = true; // Cacher les options après sélection
+
+            // Trier les photos en fonction du critère sélectionné
+            sortPhotos(selectedValue);
+        });
+    });
+
+    // Optionnel : fermer le dropdown si on clique en dehors
+    document.addEventListener('click', function(event) {
+        if (!filterTrigger.contains(event.target) && !customOptions.contains(event.target)) {
+            filterTrigger.setAttribute('aria-expanded', 'false');
+            customOptions.hidden = true;
+        }
+    });
+}
