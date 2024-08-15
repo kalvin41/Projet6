@@ -139,7 +139,7 @@ function initializeSortEvents() {
         });
     });
 
-    // Optionnel : fermer le dropdown si on clique en dehors
+    //  fermer le dropdown si on clique en dehors
     document.addEventListener('click', function(event) {
         if (!filterTrigger.contains(event.target) && !customOptions.contains(event.target)) {
             filterTrigger.setAttribute('aria-expanded', 'false');

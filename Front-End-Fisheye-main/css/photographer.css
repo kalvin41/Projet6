@@ -91,6 +91,9 @@ form input {
     padding-left: 50px;
     padding-top: 50px;
 }
+.photograph-header h1{
+    width: 100%;
+}
 .photograph-header .villes{
     color: #D3573C;
     font-size: 26px;
@@ -161,7 +164,7 @@ height:250px;
     gap: 10px;
     font-family: 'Arial', sans-serif;
     margin-bottom: 20px;
-    margin-left: 50px;
+    margin-left: 100px;
     margin-top: 10px;
 }
 
@@ -177,7 +180,8 @@ height:250px;
 .custom-select {
     position: relative;
     display: inline-block;
-    width: 130px; /* Largeur fixe pour le sélecteur et la liste */
+    width: 130px; /* Ajustez la largeur si nécessaire */
+    
 }
 
 /* Le sélecteur de tri */
@@ -194,14 +198,15 @@ height:250px;
     color: #fff;
     position: relative; /* Nécessaire pour le positionnement de la flèche */
     font-size: 16px;
+    text-align: left; /* Aligner le texte à gauche */
 }
 
 /* Icône de la flèche */
 .arrow {
-    position: absolute; /* Positionner la flèche indépendamment du texte */
-    right: 10px; /* Positionner la flèche à droite du sélecteur */
-    top: 50%; /* Centrer verticalement la flèche */
-    transform: translateY(-50%); /* Ajuster la flèche pour qu'elle soit parfaitement centrée */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     transition: transform 0.3s ease;
 }
 
@@ -216,28 +221,45 @@ height:250px;
     top: 35px;
     left: 0;
     right: 0;
-    margin-top: 5px;
     background-color: #901C1C;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 5px 5px;
     list-style: none;
     padding: 0;
-    z-index: 1000;
-    width: 100%; /* Assure que la liste des options a la même largeur que le sélecteur */
-    box-sizing: border-box; /* Inclut les bordures et le padding dans la largeur */
+    margin: 0;
+    z-index: 10;
+    box-sizing: border-box;
+   
 }
 
 /* Chaque option individuelle */
 #custom-options li {
-    
+    position: relative;
     padding: 10px 15px;
     cursor: pointer;
     font-size: 16px;
     color: #fff;
 }
 
+/* Barre de séparation entre les options */
+#custom-options li::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 12px; /* Aligné avec le padding gauche */
+    width: calc(100% - 25px); /* Largeur totale moins le padding gauche et droit */
+    border-bottom: 1px solid #fff; /* Ajouter une barre blanche */
+}
 
+/* Dernière option sans bordure inférieure */
+#custom-options li:last-child::before {
+    display: none;
+}
+
+/* Style au survol des options */
+#custom-options li:hover {
+    background-color: #b02a2a;
+}
 
 /* Masquer les options lorsque le dropdown est fermé */
 #custom-options[hidden] {
