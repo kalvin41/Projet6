@@ -147,3 +147,99 @@ function initializeSortEvents() {
         }
     });
 }
+let currentIndex = 0;
+
+function displayPhotos(sortedPhotos) {
+    const mainDiv = document.querySelector('#main');
+    let mediaSection = document.querySelector('.photographer-media');
+
+    if (!mediaSection) {
+        mediaSection = document.createElement('section');
+        mediaSection.classList.add('photographer-media');
+        mainDiv.appendChild(mediaSection);
+    }
+
+    mediaSection.innerHTML = '';
+
+    sortedPhotos.forEach((m, index) => {
+        const mediaItem = document.createElement('div');
+        mediaItem.classList.add('media-item');
+
+        mediaItem.addEventListener('click', () => openLightbox(index));
+
+        if (m.image) {
+            mediaItem.innerHTML = `
+                <img src="./assets/Sample_Photos/${m.photographerId}/${m.image}" alt="${m.title}">
+            `;
+        } else if (m.video) {
+            mediaItem.innerHTML = `
+                <video class="media-video" controls>
+                    <source src="./assets/Sample_Photos/${m.photographerId}/${m.video}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        }
+
+        mediaItem.innerHTML += `
+            <div class="move2">
+                <h3>${m.title}</h3>
+                <p>${m.likes} <i class="fa-solid fa-heart"></i></p>
+            </div>
+        `;
+
+        mediaSection.appendChild(mediaItem);
+    });
+}
+
+function openLightbox(index) {
+    currentIndex = index;
+    const lightbox = document.getElementById('lightbox');
+    const imgElement = document.getElementById('lightbox-img');
+    const videoElement = document.getElementById('lightbox-video');
+
+    const media = photographerMedia[currentIndex];
+
+    if (media.image) {
+        imgElement.src = `./assets/Sample_Photos/${media.photographerId}/${media.image}`;
+        imgElement.alt = media.title;
+        imgElement.classList.remove('hidden');
+        videoElement.classList.add('hidden');
+    } else if (media.video) {
+        videoElement.src = `./assets/Sample_Photos/${media.photographerId}/${media.video}`;
+        videoElement.classList.remove('hidden');
+        imgElement.classList.add('hidden');
+    }
+
+    lightbox.classList.remove('hidden');
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.add('hidden');
+}
+
+function showNextMedia() {
+    currentIndex = (currentIndex + 1) % photographerMedia.length;
+    openLightbox(currentIndex);
+}
+
+function showPrevMedia() {
+    currentIndex = (currentIndex - 1 + photographerMedia.length) % photographerMedia.length;
+    openLightbox(currentIndex);
+}
+
+document.querySelector('.close-lightbox').addEventListener('click', closeLightbox);
+document.querySelector('.lightbox-next').addEventListener('click', showNextMedia);
+document.querySelector('.lightbox-prev').addEventListener('click', showPrevMedia);
+
+document.addEventListener('keydown', function(event) {
+    if (!document.getElementById('lightbox').classList.contains('hidden')) {
+        if (event.key === 'ArrowRight') {
+            showNextMedia();
+        } else if (event.key === 'ArrowLeft') {
+            showPrevMedia();
+        } else if (event.key === 'Escape') {
+            closeLightbox();
+        }
+    }
+});
