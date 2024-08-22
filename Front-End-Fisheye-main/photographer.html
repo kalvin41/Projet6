@@ -40,7 +40,7 @@
   <div id="contact_modal" class="modal-container">
     <div class="modal">
       <header>
-        <h2>Contactez-moi</h2>
+        <h2 id="contactez"></h2>
         <img src="assets/icons/close.svg" alt="Close" onclick="closeModal()" />
       </header>
       <form>
@@ -65,15 +65,22 @@
     </div>
   </div>
   <div id="lightbox" class="lightbox hidden">
-    <button class="close-lightbox" aria-label="Close">&times;</button>
+    
     <div class="lightbox-content">
+      <button class="close-lightbox" aria-label="Close">&times;</button>
         <img id="lightbox-img" src="" alt="" class="lightbox-media hidden" />
         <video id="lightbox-video" class="lightbox-media hidden" controls></video>
         <div id="lightbox-title" class="lightbox-title"></div>
-    </div>
-    <button class="lightbox-prev" aria-label="Previous">&#10094;</button>
+        <button class="lightbox-prev" aria-label="Previous">&#10094;</button>
     <button class="lightbox-next" aria-label="Next">&#10095;</button>
+    </div>
+    
 </div>
+<div id="photographer-info" class="photographer-info">
+  <p id="total-likes"></p>
+  <p id="daily-rate"></p>
+</div>
+
 
   <script src="scripts/pages/photographer.js"></script>
   <script src="scripts/utils/contactForm.js"></script>

@@ -42,9 +42,17 @@ function displayPhotographerDetailsAndMedia(photographerId, data) {
 
         // Afficher les médias
         displayPhotos(photographerMedia);
+        updatePhotographerInfo(photographer);
     }
 }
+// Fonction pour mettre à jour les informations du photographe dans la `div`
+function updatePhotographerInfo(photographer) {
+    const totalLikes = photographerMedia.reduce((acc, media) => acc + media.likes, 0);
+    const dailyRate = photographer.price;
 
+    document.getElementById('total-likes').innerHTML =`${totalLikes} <i class="fa-solid fa-heart"></i>`;
+    document.getElementById('daily-rate').textContent = `${dailyRate}€/jour`;
+}
 // Fonction de tri des photos
 function sortPhotos(criteria) {
     let sortedPhotos;
@@ -112,6 +120,7 @@ function displayPhotos(sortedPhotos) {
 function initializeSortEvents() {
     const filterTrigger = document.getElementById('filter-trigger');
     const customOptions = document.getElementById('custom-options');
+    let lastSelectedOption = null;
 
     // Afficher ou cacher les options de tri lorsque l'utilisateur clique sur le trigger
     filterTrigger.addEventListener('click', function(event) {
@@ -136,12 +145,23 @@ function initializeSortEvents() {
             filterTrigger.setAttribute('aria-expanded', 'false'); // Réinitialiser aria-expanded
             customOptions.hidden = true; // Cacher les options après sélection
 
+            // Masquer l'option sélectionnée
+            this.style.display = 'none';
+
+            // Réafficher la dernière option sélectionnée
+            if (lastSelectedOption) {
+                lastSelectedOption.style.display = 'block';
+            }
+
+            // Mettre à jour la dernière option sélectionnée
+            lastSelectedOption = this;
+
             // Trier les photos en fonction du critère sélectionné
             sortPhotos(selectedValue);
         });
     });
 
-    //  fermer le dropdown si on clique en dehors
+    // Fermer le dropdown si on clique en dehors
     document.addEventListener('click', function(event) {
         if (!filterTrigger.contains(event.target) && !customOptions.contains(event.target)) {
             filterTrigger.setAttribute('aria-expanded', 'false');
@@ -149,6 +169,7 @@ function initializeSortEvents() {
         }
     });
 }
+
 document.querySelectorAll('.media-item img, .media-item video').forEach((media, index) => {
     media.addEventListener('click', () => openLightbox(index));
 });

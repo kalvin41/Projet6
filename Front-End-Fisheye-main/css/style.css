@@ -17,6 +17,7 @@ header {
 h1 {
     color: #901C1C;
     margin-right: 100px;
+    font-weight: 100;
 }
 
 .logo {
@@ -51,7 +52,17 @@ h1 {
     overflow: hidden; /* Masquer les parties de l'image qui débordent */
     scale: 0.7;
 }
-
+p{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.town{
+    color: #b02a2a;
+    font-size: 20px;
+}
+.prix{
+    color: #ccc;
+}
 .zoom-container img {
     height: 450px; /* Agrandit l'image */
     width: 500px;  /* Agrandit l'image */

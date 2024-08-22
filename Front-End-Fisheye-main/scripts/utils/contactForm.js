@@ -1,3 +1,20 @@
+let photographer; // Déclarez cette variable globalement pour stocker les détails du photographe
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const photographerId = urlParams.get('id');
+
+    if (photographerId) {
+        fetch('./data/photographers.json')
+            .then(response => response.json())
+            .then(data => {
+                photographer = data.photographers.find(p => p.id == photographerId);
+                displayPhotographerDetailsAndMedia(photographerId, data);
+                displayPhotographerNameInModal(); // Appelez cette fonction pour afficher le nom dans la modale
+            });
+    }
+
+});
 function displayModal() {
     const modal = document.getElementById("contact_modal");
 	modal.style.display = "block";
@@ -27,3 +44,11 @@ document.querySelector("form").addEventListener("submit", function(event) {
     // Ferme la modale
     closeModal();
   });
+  function displayPhotographerNameInModal() {
+    if (photographer && photographer.name) {
+        const contactez = document.getElementById("contactez");
+        contactez.innerHTML = `Contactez-moi ${photographer.name}`;
+    } else {
+        console.error("Le nom du photographe n'a pas pu être récupéré.");
+    }
+}
