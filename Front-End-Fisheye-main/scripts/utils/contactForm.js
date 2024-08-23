@@ -23,6 +23,7 @@ function displayModal() {
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
+    
 }
 // Gestionnaire de soumission du formulaire
 document.querySelector("form").addEventListener("submit", function(event) {
