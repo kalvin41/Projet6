@@ -28,6 +28,7 @@ async function displayData(photographers) {
         const userCardDOM = photographerModel.getUserCardDOM();
         photographersSection.appendChild(userCardDOM);
     });
+    
 }
 
 async function init() {
@@ -38,17 +39,20 @@ async function init() {
 
 init();
 
-function photographerTemplate(photographer) {
+function photographerTemplate(photographer) { // data-id pour récupérer l'id du photographe avec ? pour inclure l'id dans l'url
     return {
         getUserCardDOM() {
             const div = document.createElement('article');
             div.classList.add('photographer-card');
             div.innerHTML = `
-                <img src="${photographer.portrait}" alt="${photographer.name}">
+            <div class="zoom-container">
+                <a href="photographer.html?id=${photographer.id}"><img src="${photographer.portrait}" alt="${photographer.name}"></a>
+                </div>
                 <h2>${photographer.name}</h2>
-                <p>${photographer.city}, ${photographer.country}</p>
-                <p>${photographer.tagline}</p>
-                <p>$${photographer.price}</p>
+                <p class="town">${photographer.city}, ${photographer.country}</p>
+                <p class="slogan">${photographer.tagline}</p>
+                <p class="prix">${photographer.price}€/jour</p>
+        
             `;
             return div;
         }
