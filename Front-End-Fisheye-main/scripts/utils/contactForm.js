@@ -9,17 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 photographer = data.photographers.find(p => p.id == photographerId);
-                displayPhotographerDetailsAndMedia(photographerId, data);
+                
                 displayPhotographerNameInModal(); // Appelez cette fonction pour afficher le nom dans la modale
             });
     }
 
 });
+
 function displayModal() {
     const modal = document.getElementById("contact_modal");
 	modal.style.display = "block";
+    
 }
-
+// Attacher la fonction à l'objet window pour la rendre accessible globalement
+window.displayModal = displayModal;
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";

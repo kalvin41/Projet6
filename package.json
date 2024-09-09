@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "node": "^22.8.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.6.0",
+    "globals": "^15.9.0"
+  }
+}
