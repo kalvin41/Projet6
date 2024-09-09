@@ -266,6 +266,11 @@ function initializeLightboxEvents() {
         }
     });
 }
+function closeModal() {
+    const modal = document.getElementById("contact_modal");
+    modal.style.display = "none";
+    
+}
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
         // Fermer la lightbox si elle est ouverte
