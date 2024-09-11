@@ -112,10 +112,11 @@ function displayPhotos(sortedPhotos) {
 
         mediaItem.innerHTML += `
             <div class="move2">
-                <h3 class="media-title">${m.title}</h3>
-                 <p>${m.likes} <i class="fa-solid fa-heart like-icon" data-index="${index}"></i></p>
+                 <a href=""><h3 class="media-title">${m.title}</h3></a>
+                 <p tabindex="0">${m.likes} <i class="fa-solid fa-heart like-icon" data-index="${index}" tabindex="0"></i></p>
             </div>
         `;
+        
         // Empêcher le comportement par défaut des liens
         const links = mediaItem.querySelectorAll('a');
         links.forEach(link => {
@@ -126,6 +127,7 @@ function displayPhotos(sortedPhotos) {
         
         mediaSection.appendChild(mediaItem);
     });
+    
     // Ajouter l'événement de clic sur les icônes de cœur pour ajouter des likes
     document.querySelectorAll('.like-icon').forEach(icon => {
         icon.addEventListener('click', (event) => {
@@ -142,6 +144,13 @@ function displayPhotos(sortedPhotos) {
             // Recalculer le nombre total de likes
             updateTotalLikes();
         });
+         // Ajouter l'événement keydown pour gérer l'appui sur "Entrée"
+    icon.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.stopPropagation(); // Empêcher l'événement de se propager
+            icon.click(); // Simuler un clic pour réutiliser la même logique d'incrémentation des likes
+        }
+    });
     });
     
 }

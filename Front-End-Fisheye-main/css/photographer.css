@@ -1,6 +1,10 @@
 #contact_modal {
     display: none;
 }
+a{
+    text-decoration: none;
+    color: inherit;
+}
 
 .photograph-header {
     background-color: #FAFAFA;
@@ -155,11 +159,13 @@ height:250px;
 .move2{
     display: flex;
     color: #D3573C;
+    
 }
 .move2 h3{
     margin-top: 10px;
     font-size: 25px;
 }
+
 .move2 p{
     margin-top: 10px;
     margin-left: auto;

@@ -19,7 +19,7 @@ async function getPhotographers() {
         return [];
     }
 }
-
+        
 async function displayData(photographers) {
     const photographersSection = document.querySelector(".photographer_section");
 
